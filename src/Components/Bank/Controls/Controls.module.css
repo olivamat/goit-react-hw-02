@@ -1,0 +1,18 @@
+.controls {
+  width: 800px;
+  background-color: #3142d4;
+  margin: 0 auto;
+  margin-bottom: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px 10px 10px 10px;
+}
+.controls button {
+  text-align: center;
+  margin: 50px;
+  color: #3142d4; /* цвет текста */
+  text-decoration: none; /* убирать подчёркивание у ссылок */
+  user-select: none; /* убирать выделение текста */
+  padding: 0.7em 1.5em; /* отступ от текста */
+}
