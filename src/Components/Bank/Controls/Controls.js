@@ -4,8 +4,8 @@ import styles from './Controls.module.css';
 
 export default class Controls extends Component {
   static propTypes = {
-    onControlsDeposit: PropTypes.func.isRequired,
-    onControlsWithdraw: PropTypes.func.isRequired,
+    onDeposit: PropTypes.func.isRequired,
+    onWithdraw: PropTypes.func.isRequired,
   };
 
   state = {
@@ -20,13 +20,13 @@ export default class Controls extends Component {
 
   handleAddDeposit = e => {
     e.preventDefault();
-    this.props.onControlsDeposit({ ...this.state });
+    this.props.onDeposit({ ...this.state });
     this.setState({ numeric: '' });
   };
 
   handleAddWithdraw = e => {
     e.preventDefault();
-    this.props.onControlsWithdraw({ ...this.state });
+    this.props.onWithdraw({ ...this.state });
     this.setState({ numeric: '' });
   };
 

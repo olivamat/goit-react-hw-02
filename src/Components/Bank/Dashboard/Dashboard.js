@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import MovieGrid from '../MovieGrid/MovieGrid';
-// import styles from './MoviePage.module.css';
-// import MovieFilter from '../SearchBar/SearchBar';
 import shortid from 'shortid';
 import Balance from '../Balance/Balance';
 import TransactionHistory from '../TransactionHistory/TransactionHistory';
@@ -26,37 +23,37 @@ export default class Dachboard extends Component {
     balance: this.props.balance,
   };
 
-  handleControlsAddDeposit = num => {
+  addHistotyItem = (type, num) => {
     const userNumeric = parseInt(num.numeric, 10);
-    const date = new Date();
-    const dateToString = date.toLocaleString();
+    const dateToString = new Date().toLocaleString();
     const addHistoty = {
       id: shortid.generate(),
-      type: 'deposit',
+      type,
       amount: userNumeric,
       date: dateToString,
     };
+    return addHistoty;
+  };
+
+  handleControlsAddDeposit = num => {
+    const type = 'deposit';
+    const addHistory = this.addHistotyItem(type, num);
+    const userNumeric = parseInt(num.numeric, 10);
     if (userNumeric === 0) {
       alert('Введите сумму для проведения операции!');
     } else {
       this.setState(prevState => ({
         balance: prevState.balance + parseInt(num.numeric, 10),
-        history: [...prevState.history, addHistoty],
+        history: [...prevState.history, addHistory],
       }));
     }
   };
 
   handleControlsAddWithdraw = num => {
     const currentBalance = this.state.balance;
+    const type = 'withdraw';
     const userNumeric = parseInt(num.numeric, 10);
-    const date = new Date();
-    const dateToString = date.toLocaleString();
-    const addHistoty = {
-      id: shortid.generate(),
-      type: 'withdraw',
-      amount: userNumeric,
-      date: dateToString,
-    };
+    const addHistory = this.addHistotyItem(type, num);
     if (userNumeric > currentBalance) {
       alert('На счету недостаточно средств для проведения операции!');
     } else if (userNumeric === 0) {
@@ -64,7 +61,7 @@ export default class Dachboard extends Component {
     } else {
       this.setState(prevState => ({
         balance: prevState.balance - userNumeric,
-        history: [...prevState.history, addHistoty],
+        history: [...prevState.history, addHistory],
       }));
     }
   };
@@ -75,14 +72,10 @@ export default class Dachboard extends Component {
     return (
       <div>
         <Controls
-          onControlsDeposit={this.handleControlsAddDeposit}
-          onControlsWithdraw={this.handleControlsAddWithdraw}
+          onDeposit={this.handleControlsAddDeposit}
+          onWithdraw={this.handleControlsAddWithdraw}
         />
-        <Balance
-          onCoDeCu={this.handledepositCurrent}
-          transactions={history}
-          balance={balance}
-        />
+        <Balance transactions={history} balance={balance} />
         <TransactionHistory transactions={history} />
       </div>
     );

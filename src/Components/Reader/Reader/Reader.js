@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Publication from '../Publication/Publication';
+import Counter from '../Counter/Counter';
+import Controls from '../Controls/Controls';
 import styles from './Reader.module.css';
 
 export default class Reader extends Component {
-  static defaultProps = {
-    initialPage: 1,
-  };
-
   static propTypes = {
-    initialPage: PropTypes.number,
     pages: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.string.isRequired,
@@ -19,7 +17,7 @@ export default class Reader extends Component {
   };
 
   state = {
-    currentPage: this.props.initialPage,
+    currentPage: 0,
   };
 
   handleIncrement = () => {
@@ -43,31 +41,14 @@ export default class Reader extends Component {
 
     return (
       <div className={styles.reader}>
-        <section className={styles.publication}>
-          <h2>{title}</h2>
-          <p>{text}</p>
-        </section>
-        <p className={styles.counter}>{currentPage + 1}/12</p>
-        <section className={styles.controls}>
-          {currentPage !== 0 && (
-            <button
-              type="button"
-              className={styles.button}
-              onClick={this.handleDecrement}
-            >
-              Назад
-            </button>
-          )}
-          {currentPage < max - 1 && (
-            <button
-              type="button"
-              className={styles.button}
-              onClick={this.handleIncrement}
-            >
-              Вперед
-            </button>
-          )}
-        </section>
+        <Publication title={title} text={text} />
+        <Counter currentPage={currentPage} max={max} />
+        <Controls
+          max={max}
+          currentPage={currentPage}
+          incrementPage={this.handleIncrement}
+          decrementPage={this.handleDecrement}
+        />
       </div>
     );
   }

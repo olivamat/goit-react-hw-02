@@ -1,5 +1,5 @@
 import React from 'react';
-import Reader from './Components/Reader/Reader';
+import Reader from './Components/Reader/Reader/Reader';
 import MoviePage from './Components/MoviePages/MoviePage/MoviePage';
 
 import Dachbord from './Components/Bank/Dashboard/Dashboard';
@@ -10,7 +10,7 @@ import history from './history.json';
 function App() {
   return (
     <div>
-      <Reader initialPage={0} pages={publications} />
+      <Reader pages={publications} />
       <MoviePage movies={movies} />
       <Dachbord history={history} balance={2800} />
     </div>
